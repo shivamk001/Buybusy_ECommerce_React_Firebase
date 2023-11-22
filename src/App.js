@@ -4,6 +4,7 @@ import Navbar from '../src/Components/Navbar/navbar'
 import Home from './Components/Home/Home';
 import Signin from './Components/User/Signin';
 import Signup from './Components/User/Signup';
+import CreateProduct from './Components/CreateProduct/CreateProduct';
 
 function App() {
   const router=createBrowserRouter([
@@ -11,7 +12,8 @@ function App() {
       children:[
         {index: true, element: <Home/>},
         {path:'signup', element: <Signup/>},
-        {path:'signin', element: <Signin/>}
+        {path:'signin', element: <Signin/>},
+        {path: 'createProduct', element: <CreateProduct/>}
       ]
     }
   ])
