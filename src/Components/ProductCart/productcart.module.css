@@ -1,0 +1,25 @@
+.cartContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartGrid{
+    width: 90%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 1% 1%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.textDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell{
+    height: 90px;
+}

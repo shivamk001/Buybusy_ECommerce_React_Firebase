@@ -1,47 +1,30 @@
-import { useState, useEffect } from "react"
-import { db } from "../../firebaseinit";
-import { collection, onSnapshot } from "firebase/firestore"; 
+import styles from './home.module.css'
+
+import { useContext } from "react"
+import { productContext } from '../../context.js';
+import Card from "../ProductCard/ProductCard.js";
+import FilterProducts from "../FilterProducts/FilterProducts.js";
 
 export default function Home(){
-    let [allProducts, setAllProducts]=useState([])
-
-    // async function createProduct(e){
-    //     e.preventDefault()
-    //     await addDoc(collection(db, "products"), product)
-
-    //     const querySnapshot = await getDocs(collection(db, "products"));
-    //     let productArray=[]
-    //     querySnapshot.forEach((doc) => {
-    //         productArray.push(doc.data())
-    //     });
-    //     setAllProducts(productArray)
-    // }
-
-
-    useEffect(()=>{
-        // console.log('UseEffect called')
-        // async function getAllProducts(){
-        //     const querySnapshot = await getDocs(collection(db, "products"));
-        //     let productArray=[]
-        //     querySnapshot.forEach((doc) => {
-        //         productArray.push(doc.data())
-        //     });
-        //     setAllProducts(productArray)
-        // }
-        // getAllProducts()
-
-        onSnapshot(collection(db, "products"), (snapShot) => {
-            const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
-            setAllProducts(products)
-        });
-        
-    },[])
-
+    const {allProducts}=useContext(productContext);
+    console.log(allProducts)
     return (
-        <>
-            <h2>All Products</h2>
-            {allProducts.map((product, index)=>(<p key={index}>{product.name}, {product.price}</p>))}
-        </>
+        <section className={styles.home}>  
+            <section className={styles.filterSection}>
+                <FilterProducts/>
+                <div className={styles.searchDiv}>
+                    <input type='text' placeholder='Search Product'/>
+                </div>
+            </section>
+            <section className={styles.productSection}>
+
+                <div className={styles.productCardsContainer}>
+                    {allProducts.map((product, index)=>(<Card key={index} product={product}/>))}
+                </div>
+                
+            </section>
+
+        </section>
 
     )
 }

@@ -8,6 +8,7 @@ export default function Header(){
             <h1 className={styles.marginLeft}>BuyBusy App</h1>
             <div className={styles.linkcontainer}>
                 <div><Link to='/'><i className="fa-solid fa-house fa-xl" style={{color: '#000000'}}></i></Link></div> 
+                <div><Link to='/cart'><i className="fa-solid fa-cart-shopping fa-xl" style={{color: "#000000"}}></i></Link></div> 
                 <div><Link to='/signup'><i className="fa-solid fa-user-plus fa-xl" style={{color: '#000000'}}></i></Link></div>
                 <div><Link to='/signin'><i className="fa-solid fa-right-to-bracket fa-xl" style={{color: '#000000'}}></i></Link></div>
             </div>

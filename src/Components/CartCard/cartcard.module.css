@@ -1,0 +1,37 @@
+.cartGrid{
+    width: 90%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 1% 1%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.image{
+    height: 90px;
+    width: 90px;
+}
+
+.textDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.decreseQuantityButton{
+    background-color: white;
+    border: 1px solid #df1111;
+    cursor: pointer;
+}
+
+.increaseQuantityButton{
+    background-color: white;
+    border: 1px solid #2eef3b;
+    cursor: pointer;
+}
+
+.deleteCartProductButton{
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #df1111;
+}
