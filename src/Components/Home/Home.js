@@ -1,20 +1,13 @@
 import styles from './home.module.css'
 
 import { useContext } from "react"
-import Spinner from 'react-spinner-material';
-
 import { productContext } from '../../context.js';
-
-import Products from '../Products/Products.js';
+import Card from "../ProductCard/ProductCard.js";
 import FilterProducts from "../FilterProducts/FilterProducts.js";
 
 export default function Home(){
-    //let [loading, setLoading]=useState(true)
-    const {showSpinner}=useContext(productContext);
-    //setLoading(showSpinner);
-
-
-
+    const {allProducts}=useContext(productContext);
+    console.log(allProducts)
     return (
         <section className={styles.home}>  
             <section className={styles.filterSection}>
@@ -22,17 +15,10 @@ export default function Home(){
 
             </section>
             <section className={styles.productSection}>
-                {showSpinner?
-                
-                <div className={styles.spinnerDiv}>
-                    <Spinner radius={120} color={"#333"} stroke={2} visible={showSpinner} />
-                </div>:
-                    <Products/>
-            
-                }
 
-                    
-               
+                <div className={styles.productCardsContainer}>
+                    {allProducts.map((product, index)=>(<Card key={index} product={product}/>))}
+                </div>
                 
             </section>
 

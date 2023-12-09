@@ -1,7 +1,6 @@
 .home{
     display: flex;
     flex-direction: row;
-    height: 100%;
 }
 
 .filterSection{
@@ -28,11 +27,13 @@
     height: 5%;
 }
 
-.spinnerDiv{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.productCardsContainer{
     height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 3%;
 }
