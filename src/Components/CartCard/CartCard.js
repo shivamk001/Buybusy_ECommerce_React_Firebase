@@ -1,4 +1,5 @@
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { toast } from 'react-toastify';
 
 import { db } from "../../firebaseinit.js";
 import styles from './cartcard.module.css'
@@ -11,26 +12,31 @@ export default function CartCard({product}){
         const id=product.id;
         let docRef=doc(db, 'cart', id);
         let docSnap=await getDoc(docRef)
+        let data=docSnap.data()
         if(docSnap.exists()){
             let oldQuantity=docSnap.data().quantity
             await updateDoc(docRef, {
                 quantity: oldQuantity+1
             })
         }
+        toast(`${data.name} added to cart`)
     }
     async function decreaseQuantity(){
         const id=product.id;
         let docRef=doc(db, 'cart', id);
         let docSnap=await getDoc(docRef)
+        let data=docSnap.data()
         if(docSnap.exists()){
             let oldQuantity=docSnap.data().quantity
             if(oldQuantity-1===0){
                 deleteCartProduct()
+                toast(`All ${data.name} removed from cart`)
                 return;
             }
             await updateDoc(docRef, {
                 quantity: oldQuantity-1
             })
+            toast(`${data.name} removed from cart by one`)
         }
     }
 

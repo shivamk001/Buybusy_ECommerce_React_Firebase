@@ -3,6 +3,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 import { db } from "../../firebaseinit.js";
 import styles from './productcard.module.css';
+import { toast } from 'react-toastify';
 //import { productContext } from '../../context.js';
 
 export default function Card({product}){
@@ -29,6 +30,7 @@ export default function Card({product}){
                 imageLink: product.imageLink
             })
         }
+        toast('Product added to cart!')
     }
     return (
         <>

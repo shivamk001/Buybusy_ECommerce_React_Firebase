@@ -2,6 +2,8 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from "firebase/firestore"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { db } from "./firebaseinit";
 import { productContext } from './context';
@@ -35,20 +37,35 @@ function App() {
 
   useEffect(()=>{
     let {field, operator, value}=queryObject
+    let toastMessage=''
     console.log('App:', queryObject, categoryArr);
 
     let q=null;
     if(categoryArr.length===0){
       q=query(collection(db, "products"), where(field, operator, value));
+      //toastMessage+=`Showing all products with price <= ${value}`
     }
     else{
       q=query(collection(db, "products"), where(field, operator, value), where('category', 'in', categoryArr));
+
+      toastMessage+='Showing products from '
+      categoryArr.forEach(category=>{
+        toastMessage+=category+', '
+      })
+      toastMessage+=` and price <= ${value}`
     }
 
     onSnapshot(q, (snapShot) => {
       const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
       setAllProducts(products)
       setShowSpinner(false)
+      if(value>0){
+        if(toastMessage.length>0){
+          toast(toastMessage)
+        }
+        
+      }
+      
     });
     
   },[queryObject, categoryArr])
@@ -57,6 +74,7 @@ function App() {
   return (
    
     <>
+      <ToastContainer />
       <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr, showSpinner }}>
         <RouterProvider router={router}/>
       </productContext.Provider>

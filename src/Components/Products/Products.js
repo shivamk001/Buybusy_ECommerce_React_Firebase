@@ -4,6 +4,7 @@ import { productContext } from '../../context';
 
 import { useContext } from 'react';
 
+
 export default function Products(){
 
     const {allProducts}=useContext(productContext);
