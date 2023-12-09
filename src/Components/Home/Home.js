@@ -12,9 +12,7 @@ export default function Home(){
         <section className={styles.home}>  
             <section className={styles.filterSection}>
                 <FilterProducts/>
-                <div className={styles.searchDiv}>
-                    <input type='text' placeholder='Search Product'/>
-                </div>
+
             </section>
             <section className={styles.productSection}>
 

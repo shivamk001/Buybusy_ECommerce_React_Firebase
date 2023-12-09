@@ -1,7 +1,7 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot } from "firebase/firestore"; 
+import { collection, onSnapshot, query, where } from "firebase/firestore"; 
 
 import { db } from "./firebaseinit";
 import { productContext } from './context';
@@ -15,8 +15,9 @@ import CreateProduct from './Components/CreateProduct/CreateProduct';
 function App() {
   let [allProducts, setAllProducts]=useState([])
   
+  let [queryObject, setqueryObject]=useState({field:'price', operator:'>=', value:0})
 
-
+  let [categoryArr, setcategoryArr]=useState([])
 
   const router=createBrowserRouter([
     {path:'/', element: <Navbar/>,
@@ -31,18 +32,29 @@ function App() {
   ])
 
   useEffect(()=>{
-    onSnapshot(collection(db, "products"), (snapShot) => {
-        const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
-        setAllProducts(products)
+    let {field, operator, value}=queryObject
+    console.log('App:', queryObject, categoryArr);
+
+    let q=null;
+    if(categoryArr.length===0){
+      q=query(collection(db, "products"), where(field, operator, value));
+    }
+    else{
+      q=query(collection(db, "products"), where(field, operator, value), where('category', 'in', categoryArr));
+    }
+
+    onSnapshot(q, (snapShot) => {
+      const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
+      setAllProducts(products)
     });
     
-  },[])
+  },[queryObject, categoryArr])
 
 
   return (
    
     <>
-      <productContext.Provider value={{allProducts}}>
+      <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr}}>
         <RouterProvider router={router}/>
       </productContext.Provider>
       

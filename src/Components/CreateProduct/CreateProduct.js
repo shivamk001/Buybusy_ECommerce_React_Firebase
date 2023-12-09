@@ -22,6 +22,12 @@ export default function CreateProduct(){
                 <input type='text' placeholder="Product name" required onChange={(e)=>{setProduct({...product, name: e.target.value })}} onClick={(el)=>ref.current.push(el)}/>
                 <input type='text' placeholder="Product link" required onChange={(e)=>{setProduct({...product, imageLink: e.target.value })}} onClick={(el)=>ref.current.push(el)}/>
                 <input type='number' placeholder="Product price" required onChange={(e)=>{setProduct({...product, price: e.target.value })}} onClick={(el)=>ref.current.push(el)}/>
+                <select required onChange={(e)=>{setProduct({...product, category: e.target.value })}} onClick={(el)=>ref.current.push(el)}>
+                    <option value="footwear">Footwear</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="menclothes">Men Clothes</option>
+                    <option value="womenclothes">Women Clothes</option>
+                </select>
                 <input type='submit' value='create product'/>
             </form>
         </>
