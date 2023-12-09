@@ -14,6 +14,8 @@ import CreateProduct from './Components/CreateProduct/CreateProduct';
 
 function App() {
   let [allProducts, setAllProducts]=useState([])
+
+  let [showSpinner, setShowSpinner]=useState(true)
   
   let [queryObject, setqueryObject]=useState({field:'price', operator:'>=', value:0})
 
@@ -46,6 +48,7 @@ function App() {
     onSnapshot(q, (snapShot) => {
       const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
       setAllProducts(products)
+      setShowSpinner(false)
     });
     
   },[queryObject, categoryArr])
@@ -54,7 +57,7 @@ function App() {
   return (
    
     <>
-      <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr}}>
+      <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr, showSpinner }}>
         <RouterProvider router={router}/>
       </productContext.Provider>
       
