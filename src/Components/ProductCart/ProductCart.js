@@ -4,8 +4,10 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebaseinit";
 import styles from './productcart.module.css';
 import CartCard from "../CartCard/CartCard";
+import Spinner from 'react-spinner-material';
 
 export default function Cart(){
+    let [loading, setLoading]=useState(true)
     let [cartProducts, setCartProducts]=useState([])
     let [cartTotal, setCartTotal]=useState(0)
     let [cartQuantity, setCartQuantity]=useState(0)
@@ -23,12 +25,18 @@ export default function Cart(){
             setCartProducts(cartProducts)
             setCartTotal(cartTotal)
             setCartQuantity(cartQuantity)
+            setTimeout(()=>{setLoading(false)}, 1000)
+            
         });
         
     },[])
 
     return (
         <>
+        {loading && 
+            <div className={styles.spinnerDiv}>
+                <Spinner radius={120} color={"#333"} stroke={2} visible={loading} />
+            </div>}
         <h4>My Cart</h4>
         <div className={styles.cartContainer}>
             <div className={styles.cartGrid}>
