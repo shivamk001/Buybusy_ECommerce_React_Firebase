@@ -23,8 +23,6 @@ export default function Cart(){
             setCartProducts(cartProducts)
             setCartTotal(cartTotal)
             setCartQuantity(cartQuantity)
-            setTimeout(()=>{setLoading(false)}, 500)
-            
         });
         
     },[])
