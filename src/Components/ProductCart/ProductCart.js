@@ -1,36 +1,55 @@
 import { useEffect, useState } from "react"
 import { collection, onSnapshot } from "firebase/firestore"; 
+import { onAuthStateChanged } from "firebase/auth";
 
-
-import { db } from "../../firebaseinit";
+import { db, auth } from "../../firebaseinit";
 import styles from './productcart.module.css';
 import CartCard from "../CartCard/CartCard";
 import Spinner from 'react-spinner-material';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export default function Cart(){
+export default function ProductCart(){
     let [loading, setLoading]=useState(true)
     let [cartProducts, setCartProducts]=useState([])
     let [cartTotal, setCartTotal]=useState(0)
     let [cartQuantity, setCartQuantity]=useState(0)
+    //let {user}=useContext(productContext)
+    const navigate=useNavigate()
     console.log(cartProducts)
 
-    useEffect(()=>{
-        onSnapshot(collection(db, "cart"), (snapShot) => {
-            const cartProducts=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
-            const cartTotal=cartProducts.reduce((total, product)=>{
-                return total+parseInt(product.price)*parseInt(product.quantity)
-            },0)
-            const cartQuantity=cartProducts.reduce((total, product)=>{
-                return total+product.quantity
-            }, 0)
-            setCartProducts(cartProducts)
-            setCartTotal(cartTotal)
-            setCartQuantity(cartQuantity)
-            setTimeout(()=>{setLoading(false)}, 1000)
-            
+
+    useEffect(
+        ()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                          // User is signed in, see docs for a list of available properties
+                          // https://firebase.google.com/docs/reference/js/auth.user
+                          // const uid = user.uid;
+                console.log('User in App:', user)
+                onSnapshot(collection(db, "cart"), (snapShot) => {
+                    const cartProducts=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
+                    const cartTotal=cartProducts.reduce((total, product)=>{
+                        return total+parseInt(product.price)*parseInt(product.quantity)
+                    },0)
+                    const cartQuantity=cartProducts.reduce((total, product)=>{
+                        return total+product.quantity
+                    }, 0)
+                    setCartProducts(cartProducts)
+                    setCartTotal(cartTotal)
+                    setCartQuantity(cartQuantity)
+                    setTimeout(()=>{setLoading(false)}, 1000)
+                            
+                });
+                          // ...
+            }
+            else{
+                toast('Signin to access cart')
+                navigate('/signin');   
+            }
         });
-        
-    },[])
+    }, 
+    [])
 
     return (
         <>
