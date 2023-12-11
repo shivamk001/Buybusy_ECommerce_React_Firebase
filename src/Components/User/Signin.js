@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 
 import { auth } from "../../firebaseinit";
-import { useNavigate } from "react-router-dom";
+
+
+import Form from "../Form/Form";
 
 export default function Signin(){
     let [email, setEmail]=useState('');
@@ -35,12 +38,19 @@ export default function Signin(){
 
     return (
         <>
-            <h6>Signin</h6>
-            <form onSubmit={handleSubmit}>
-                <input type="email" placeholder="Enter Email" onChange={(e)=>setEmail(e.target.value)} required/>
-                <input type="password" placeholder="Enter Password" onChange={(e)=>setPassword(e.target.value)} required/>
-                <input type="submit"/>
-            </form>
+            
+            <Form handleSubmit={handleSubmit}>
+                <h2>Signin</h2>
+                <div>
+                  <label for='signinEmail'>Email</label>
+                  <input id='signinEmail' type="email" placeholder="Enter Email" onChange={(e)=>setEmail(e.target.value)} required/>
+                </div>
+                <div>
+                  <label for='signinPassword'>Password</label>
+                  <input id='signinPassword' type="password" placeholder="Enter Password" onChange={(e)=>setPassword(e.target.value)} required/>
+                </div>
+                <button type='submit'>Submit</button>
+            </Form>
         </>
 
     )
