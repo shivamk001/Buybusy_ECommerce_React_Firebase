@@ -35,7 +35,38 @@ p{
     margin: 5px;
 }
 
+
 .rangeInput{
     width: 100%;
     margin: 5px;
+}
+
+.categoryDiv{
+    display: block;
+}
+
+.categoryDiv h4{
+    text-align: left;
+}
+
+.categoryMember{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.categoryMember input{
+    margin: 5px;
+}
+
+.categoryMember label{
+    margin: 5px;
+}
+
+.categoryDiv button{
+    height: auto;
+    padding: 5px;
+    background-color: blueviolet;
+    border: none;
+    color: white;
 }

@@ -1,11 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
+import { toast } from 'react-toastify';
 
 import { productContext } from '../../context';
 import styles from './filterProducts.module.css';
 
 
+
 export default function FilterProduct(){
     const [price, setPrice]=useState(10000)
+    const priceRef=useRef();
+    const footwearRef=useRef();
+    const accessoriesRef=useRef();
+    const menRef=useRef();
+    const womenRef=useRef();
     const {setqueryObject, categoryArr, setcategoryArr}=useContext(productContext);
     
     function handleChangePrice(e){
@@ -30,7 +37,13 @@ export default function FilterProduct(){
 
     function handleReset(){
         setPrice(10000)
+        footwearRef.current.checked=false
+        accessoriesRef.current.checked=false
+        menRef.current.checked=false
+        womenRef.current.checked=false
+        priceRef.current.value=10000
         setcategoryArr([])
+        toast('Reset Done')
     }
 
     useEffect(()=>{
@@ -51,31 +64,41 @@ export default function FilterProduct(){
             <div className={styles.InputDiv}>
                 <h4>Select Price Range</h4>
                 <p>Price:&nbsp;{price}</p>
-                <input type="range" id="priceRangeInput" className={styles.rangeInput} min="0" max="10000" onChange={(e)=>handleChangePrice(e)}/>
+                <input ref={priceRef} type="range" id="priceRangeInput" className={styles.rangeInput} min="0" max="10000" onChange={(e)=>handleChangePrice(e)}/>
             </div>
             <div className={styles.InputDiv}>
-                <h4>Select Category</h4>
-                <div>
-                    
-                        <input type="checkbox" id="footwear" value="footwear" onChange={(e)=>handleCheckedCategory(e)}/>
-                        <label for="footwear">Footwear</label><br/>
-                    
+                
+                <div className={styles.categoryDiv}>
+                        <h4 sty>Select Category</h4>
+
+                        <div className={styles.categoryMember}>
+                            <input ref={footwearRef} type="checkbox" id="footwear" value="footwear" onChange={(e)=>handleCheckedCategory(e)}/>
+                            <label for="footwear">Footwear</label><br/>
+                        </div>
 
                     
-                        <input type="checkbox" id="accessories" value="accessories" onChange={(e)=>handleCheckedCategory(e)}/>
-                        <label for="accessories">Accessories</label><br/>
-                    
+
+                        <div className={styles.categoryMember}>
+                            <input ref={accessoriesRef} type="checkbox" id="accessories" value="accessories" onChange={(e)=>handleCheckedCategory(e)}/>
+                            <label for="accessories">Accessories</label><br/>
+                        </div>
 
                     
-                        <input type="checkbox" id="menclothes" value="menclothes" onChange={(e)=>handleCheckedCategory(e)}/>
-                        <label for="menclothes">Men Clothes</label><br/>
 
-                        <input type="checkbox" id="womenclothes" value="womenclothes" onChange={(e)=>handleCheckedCategory(e)}/>
-                        <label for="womenclothes">Women Clothes</label>
-                    
+                        <div className={styles.categoryMember}>
+                            <input ref={menRef} type="checkbox" id="menclothes" value="menclothes" onChange={(e)=>handleCheckedCategory(e)}/>
+                            <label for="menclothes">Men Clothes</label><br/>
+                        </div>
 
+
+                        <div className={styles.categoryMember}>
+                            <input ref={womenRef} type="checkbox" id="womenclothes" value="womenclothes" onChange={(e)=>handleCheckedCategory(e)}/>
+                            <label for="womenclothes">Women Clothes</label>
+                        </div>
+
+                        <button type="button" onClick={()=>handleReset()}>Reset</button>
                 </div>
-                <input type="button" value="Reset" onClick={()=>handleReset()}/>
+                
             </div>
         </div>
     )
