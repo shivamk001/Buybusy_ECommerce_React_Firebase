@@ -20,7 +20,7 @@ export default function FilterProduct(){
     }
 
     function handleCheckedCategory(e){
-        console.log(e.target.checked)
+        //console.log(e.target.checked)
         if(e.target.checked){
             setcategoryArr((prevArr)=>{return [...prevArr, e.target.value]})
         }
@@ -29,7 +29,7 @@ export default function FilterProduct(){
             console.log(index)
             if(index!==-1){
                 let updatedArr=categoryArr.filter((el, i)=> index!==i)
-                console.log(updatedArr)
+                //console.log(updatedArr)
                 setcategoryArr([...updatedArr])
             }
         }
@@ -47,7 +47,7 @@ export default function FilterProduct(){
     }
 
     useEffect(()=>{
-        console.log('HandleChangePrice:', price);
+        //console.log('HandleChangePrice:', price);
         setqueryObject({field: 'price', operator: '<=', value: price})
     }, [price])
 

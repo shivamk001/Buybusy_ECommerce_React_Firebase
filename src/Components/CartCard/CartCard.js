@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, query, where, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
 
 import { db } from "../../firebaseinit.js";
@@ -6,7 +6,7 @@ import styles from './cartcard.module.css'
 
 export default function CartCard({product}){
     
-
+    //console.log(product)
         
     async function increaseQuantity(){
         const id=product.id;
@@ -19,7 +19,7 @@ export default function CartCard({product}){
                 quantity: oldQuantity+1
             })
         }
-        toast(`${data.name} added to cart`)
+        toast(`${data.productName} added to cart`)
     }
     async function decreaseQuantity(){
         const id=product.id;
@@ -36,31 +36,41 @@ export default function CartCard({product}){
             await updateDoc(docRef, {
                 quantity: oldQuantity-1
             })
-            toast(`${data.name} removed from cart by one`)
+            toast(`${data.productName} removed from cart by one`)
         }
     }
 
 
 
     async function deleteCartProduct(){
-        const id=product.id;
-        let docRef=doc(db, 'cart', id);
-        let docSnap=await getDoc(docRef)
-        if(docSnap.exists()){
+        const productId=product.productId;
+        const userId=product.userId;
+        let queri=query(collection(db, 'cart'), where('productId','==', productId), where('userId', '==', userId))
+        let querySnap=await getDocs(queri)
+        
+        let docRef=querySnap.docs[0].ref
+        if(docRef){
             await deleteDoc(docRef)
         }
+
+
+        //let docRef=doc(db, 'cart', id);
+        // let docSnap=await getDoc(docRef)
+        // if(docSnap.exists()){
+        //     await deleteDoc(docRef)
+        // }
 
     }
     return (
         <>
-            <div><img src={product.imageLink} className={styles.image} alt={product.name}/></div>
-            <div className={styles.textDiv}><p>{product.name}</p></div>
+            <div><img src={product.productImage} className={styles.image} alt={product.productName}/></div>
+            <div className={styles.textDiv}><p>{product.productName}</p></div>
             <div className={styles.textDiv}>
                 <button onClick={()=>decreaseQuantity()} className={styles.decreseQuantityButton}><i className="fa-solid fa-minus fa-xs" style={{color: "#df1111"}}></i></button> &nbsp;
                 <p> {product.quantity}&nbsp;
                 <button onClick={()=>increaseQuantity()} className={styles.increaseQuantityButton}><i className="fa-solid fa-plus fa-xs" style={{color: "#2eef3b"}}></i></button></p></div>     
-            <div className={styles.textDiv}><p>₹{product.price}</p></div>  
-            <div className={styles.textDiv}><p>₹{parseInt(product.quantity)*parseInt(product.price)}</p></div>
+            <div className={styles.textDiv}><p>₹{product.productPrice}</p></div>  
+            <div className={styles.textDiv}><p>₹{parseInt(product.quantity)*parseInt(product.productPrice)}</p></div>
             <div className={styles.textDiv}>
                 <button className={styles.deleteCartProductButton} onClick={deleteCartProduct}><i className="fa-solid fa-trash fa-sm" style={{color: "#df1111"}}></i></button>
             </div>

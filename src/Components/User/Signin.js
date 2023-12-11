@@ -15,13 +15,13 @@ export default function Signin(){
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log(email, password)
+        //console.log(email, password)
 
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log('Signin user:', user)
+          //console.log('Signin user:', user)
           //useNavigate('/')
           // ...
 
@@ -32,7 +32,7 @@ export default function Signin(){
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log('Error:', errorCode, errorMessage);
+          //console.log('Error:', errorCode, errorMessage);
         });
     }
 

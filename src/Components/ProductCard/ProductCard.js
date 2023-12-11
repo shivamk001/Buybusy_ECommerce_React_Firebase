@@ -1,37 +1,77 @@
 //import { useContext } from "react";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, query, getDoc, where, setDoc, updateDoc, addDoc, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
-import { db } from "../../firebaseinit.js";
+import { db, auth } from "../../firebaseinit.js";
 import styles from './productcard.module.css';
 import { toast } from 'react-toastify';
+
+import { useNavigate } from "react-router-dom";
 //import { productContext } from '../../context.js';
 
 export default function Card({product}){
     //const {setCartProducts}=useContext(productContext);
+    let [userState, setUser]=useState(null);
+    let navigate=useNavigate();
+
     async function addToCart(){
 
-        //get the product from the cart
-        const docRef=doc(db, 'cart', product.id)
-        const docSnap=await getDoc(docRef);
+        if(userState!==null){
+            //console.log(product.id)
+            //console.log(userState.uid)
+            //get the product from the cart
+            let queri=query(collection(db, 'cart'), where('productId','==', product.id), where('userId', '==', userState.uid))
 
-        //if product in cart, update the quantity
-        if(docSnap.exists()){
-            let oldQuantity=docSnap.data().quantity
-            await updateDoc(docRef, {
-                quantity: oldQuantity+1
-            })
+            const querySnapshot=await getDocs(queri);
+            //console.log(querySnapshot)
+            //console.log(querySnapshot.docs[0].data())
+            //console.log(querySnapshot.empty)
+            
+
+            //if product in cart, update the quantity
+            if(!querySnapshot.empty){
+                let docData=querySnapshot.docs[0].data()
+                let docRef=querySnapshot.docs[0].ref
+                //console.log(docRef)
+                await updateDoc(docRef, {
+                    quantity: docData.quantity+1
+                })
         }
-        //else creaate the product in cart with quantity 1
+        //else create the product in cart with quantity 1
         else{
-            await setDoc(docRef, {
-                name: product.name,
-                quantity: 1,
-                price: product.price,
-                imageLink: product.imageLink
+            //console.log('vbhkvbhkfb')
+            const docRef=await addDoc(collection(db, 'cart'), {
+                productId: product.id,
+                userId: userState.uid,
+                productName: product.name,
+                productPrice: product.price,
+                productImage: product.imageLink,
+                quantity: 1
             })
         }
-        toast('Product added to cart!')
+        
+            toast('Product added to cart!')
+        }
+        else{
+            toast('Please signin to add to cart.')
+        }
+
     }
+
+    useEffect(
+        ()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+            else{
+                // toast('Signin to add to card')
+                // navigate('/signin');   
+            }
+        });
+    }, 
+    [])
     return (
         <>
             <div className={styles.card}>

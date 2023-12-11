@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from "firebase/firestore"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { onAuthStateChanged } from "firebase/auth";
 
 import { db, auth } from "./firebaseinit";
 import { productContext } from './context';
@@ -28,7 +27,8 @@ function App() {
     {path:'/', element: <Navbar/>,
       children:[
         {index: true, element: <Home/>},
-        {path: 'cart', element: <ProductCart/>},
+        {path: 'products', element: <Home/>},
+        {path: 'userCarts/:userId/myCart', element: <ProductCart/>},
         {path:'signup', element: <Signup/>},
         {path:'signin', element: <Signin/>},
         {path: 'createProduct', element: <CreateProduct/>}
@@ -39,7 +39,7 @@ function App() {
   useEffect(()=>{
     let {field, operator, value}=queryObject
     let toastMessage=''
-    console.log('App:', queryObject, categoryArr);
+    //console.log('App:', queryObject, categoryArr);
 
     let q=null;
     if(categoryArr.length===0){

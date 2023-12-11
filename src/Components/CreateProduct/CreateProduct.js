@@ -10,7 +10,7 @@ export default function CreateProduct(){
         e.preventDefault()
         await addDoc(collection(db, "products"), product)
         setProduct({name:'', imageLink:'', price: 0})
-        console.log(ref.current)
+        //console.log(ref.current)
         ref.current.forEach(element=>{
             element.target.value=''
         })

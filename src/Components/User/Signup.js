@@ -13,7 +13,7 @@ export default function Signup(){
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(email, password, confirmPassword)
+        //console.log(email, password, confirmPassword)
 
         if(password!==confirmPassword){
             toast('Password and Confirm Password dont match.')
@@ -23,13 +23,13 @@ export default function Signup(){
         .then((userCredential) => {
         // Signed up 
         const user = userCredential.user;
-        console.log(user)
+        //console.log(user)
         // ...
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log('Error:', errorMessage);
+            //console.log('Error:', errorMessage);
             // ..
         });
     }

@@ -5,6 +5,11 @@
     justify-content: center;
 }
 
+h2{
+    text-align: center;
+    margin: 25px;
+}
+
 .cartGrid{
     width: 90%;
     display: grid;
@@ -32,4 +37,13 @@
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.checkoutButton{
+    height: auto;
+    padding: 10px;
+    background-color: olivedrab;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
