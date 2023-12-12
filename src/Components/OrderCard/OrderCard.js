@@ -72,7 +72,7 @@ export default function OrderCard({product}){
             <div className={styles.textDiv}><p>₹{product.productPrice}</p></div>  
             <div className={styles.textDiv}><p>₹{parseInt(product.quantity)*parseInt(product.productPrice)}</p></div>
             <div className={styles.textDiv}>
-                <button className={styles.deleteCartProductButton} onClick={deleteCartProduct}><i className="fa-solid fa-trash fa-sm" style={{color: "#df1111"}}></i></button>
+                <button className={styles.deleteCartProductButton} onClick={deleteCartProduct}><i className={`fa-solid fa-trash fa-sm ${styles.deleteIcon}`}></i></button>
             </div>
         </>
     )

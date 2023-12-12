@@ -24,6 +24,15 @@ select{
     background-color: palegreen;
     color: black;
     border: none;
-    height: 30px;
+    height: 40px;
     cursor: pointer;
+    padding: 10px 15px;
+    font-size: medium;
+    border: 1px solid black;
+}
+
+.form button:hover{
+    color: white;
+    background-color: black;
+    transition: 0.7s;
 }

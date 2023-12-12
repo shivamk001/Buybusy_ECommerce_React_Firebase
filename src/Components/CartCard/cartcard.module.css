@@ -35,3 +35,27 @@
     cursor: pointer;
     border: 1px solid #df1111;
 }
+
+.deleteIcon{
+    color: #df1111;
+}
+
+.deleteCartProductButton:hover{
+    box-shadow: 1px 1px 6px 2px #df1111;
+    transition: 0.1px;
+}
+
+
+.deleteCartProductButton:active{
+    background-color: #df1111;
+    color: white;
+    border: 1px solid white;
+    box-shadow: none;
+    transition: 0.7s;
+    
+}
+
+.deleteCartProductButton:active i{
+    color: white;
+    transition: 0.7s;
+}

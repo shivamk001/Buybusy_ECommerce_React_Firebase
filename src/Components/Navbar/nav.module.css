@@ -53,3 +53,25 @@
 .marginBottom{
     margin-bottom: 1%;
 }   
+
+.linkIcon{
+    /* background-color: aqua; */
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkIcon:hover{
+    box-shadow: 1px 1px 6px 2px black; /*h-offset, v-offset blur spread */
+    transition: 0.7s;
+}
+
+.linkIcon:active{
+    box-shadow: 1px 1px 6px 2px red; /*h-offset, v-offset blur spread */
+    transition: 0.1s;
+}

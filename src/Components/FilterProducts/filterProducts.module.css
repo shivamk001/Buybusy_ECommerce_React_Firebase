@@ -65,8 +65,20 @@ p{
 
 .categoryDiv button{
     height: auto;
-    padding: 5px;
+    padding: 5px 10px;
     background-color: blueviolet;
     border: none;
     color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.categoryDiv button:hover{
+    background-color: black;
+    transition: 0.7s;
+}
+
+.categoryDiv button:active{
+    background-color: red;
+    transition: 0.7s;
 }

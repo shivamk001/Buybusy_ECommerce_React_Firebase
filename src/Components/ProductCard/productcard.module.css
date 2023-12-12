@@ -43,3 +43,13 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+.productButton:hover{
+    background-color: black;
+    transition: 0.7s;
+}
+
+.productButton:active{
+    background-color: red;
+    transition: 0.1s;
+}
