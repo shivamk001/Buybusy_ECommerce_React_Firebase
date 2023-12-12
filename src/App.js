@@ -5,7 +5,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { db, auth } from "./firebaseinit";
+import { db } from "./firebaseinit";
 import { productContext } from './context';
 import Navbar from './Components/Navbar/navbar'
 import Home from './Components/Home/Home';
@@ -13,6 +13,7 @@ import ProductCart from './Components/ProductCart/ProductCart';
 import Signin from './Components/User/Signin';
 import Signup from './Components/User/Signup';
 import CreateProduct from './Components/CreateProduct/CreateProduct';
+import Orders from './Components/Orders/Orders';
 
 function App() {
   let [allProducts, setAllProducts]=useState([])
@@ -29,6 +30,7 @@ function App() {
         {index: true, element: <Home/>},
         {path: 'products', element: <Home/>},
         {path: 'userCarts/:userId/myCart', element: <ProductCart/>},
+        {path: 'userOrders/:userId/orders', element: <Orders/>},
         {path:'signup', element: <Signup/>},
         {path:'signin', element: <Signin/>},
         {path: 'createProduct', element: <CreateProduct/>}

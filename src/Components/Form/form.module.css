@@ -25,4 +25,5 @@ select{
     color: black;
     border: none;
     height: 30px;
+    cursor: pointer;
 }

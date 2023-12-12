@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { collection, where, query, onSnapshot } from "firebase/firestore"; 
+import { collection, doc, where, query, onSnapshot, writeBatch } from "firebase/firestore"; 
 import { onAuthStateChanged } from "firebase/auth";
 
 import { db, auth } from "../../firebaseinit";
@@ -17,12 +17,42 @@ export default function ProductCart(){
     const {userId}=useParams()
     const navigate=useNavigate()
 
-    function checkout(){
+    async function checkout(){
+
+        if(cartProducts.length<=0){
+            toast('Please add a product to cart to checkout.')
+            return;
+        }
+        const batch=writeBatch(db);
+
         //add each product to order
+        cartProducts.forEach(docu=>{
+            console.log(docu)
+            const docRef=doc(db, 'orders', docu.id)
+            batch.set(docRef, {
+                productId: docu.productId,
+                productPrice: docu.productPrice,
+                productName: docu.productName,
+                productImage: docu.productImage,
+                quantity: docu.quantity,
+                userId: docu.userId
+            })
+        })
+        
 
         //delete each product to card
+        cartProducts.forEach(docu=>{
+            console.log(docu)
+            const docRef=doc(db, 'cart', docu.id)
+            batch.delete(docRef)
+        })
+
+        await batch.commit()
 
         //navigate to order
+        toast('Checking out. Moving to orders.')
+        navigate(`/userOrders/${userId}/orders`)
+
     }
 
 

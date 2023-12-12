@@ -1,5 +1,5 @@
 //import { useContext } from "react";
-import { collection, query, getDoc, where, setDoc, updateDoc, addDoc, getDocs } from "firebase/firestore";
+import { collection, query, where, updateDoc, addDoc, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -7,13 +7,11 @@ import { db, auth } from "../../firebaseinit.js";
 import styles from './productcard.module.css';
 import { toast } from 'react-toastify';
 
-import { useNavigate } from "react-router-dom";
 //import { productContext } from '../../context.js';
 
 export default function Card({product}){
     //const {setCartProducts}=useContext(productContext);
     let [userState, setUser]=useState(null);
-    let navigate=useNavigate();
 
     async function addToCart(){
 
@@ -41,7 +39,7 @@ export default function Card({product}){
         //else create the product in cart with quantity 1
         else{
             //console.log('vbhkvbhkfb')
-            const docRef=await addDoc(collection(db, 'cart'), {
+            await addDoc(collection(db, 'cart'), {
                 productId: product.id,
                 userId: userState.uid,
                 productName: product.name,

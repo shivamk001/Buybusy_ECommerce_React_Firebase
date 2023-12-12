@@ -1,0 +1,49 @@
+.orderContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    text-align: center;
+    margin: 25px;
+}
+
+.orderGrid{
+    width: 90%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 1% 1%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.textDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell{
+    height: 90px;
+}
+
+
+.spinnerDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.checkoutButton{
+    height: auto;
+    padding: 10px;
+    background-color: olivedrab;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

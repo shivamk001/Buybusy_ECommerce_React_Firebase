@@ -32,7 +32,7 @@ export default function Signin(){
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          //console.log('Error:', errorCode, errorMessage);
+          console.log('Error:', errorCode, errorMessage);
         });
     }
 
