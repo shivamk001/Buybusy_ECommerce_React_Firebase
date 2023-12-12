@@ -24,6 +24,8 @@ function App() {
 
   let [categoryArr, setcategoryArr]=useState([])
 
+  let [searchText, setsearchText]=useState('')
+
   const router=createBrowserRouter([
     {path:'/', element: <Navbar/>,
       children:[
@@ -58,8 +60,10 @@ function App() {
       toastMessage+=` and price <= ${value}`
     }
 
+    let regEx= new RegExp(searchText, 'i')
+
     onSnapshot(q, (snapShot) => {
-      const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}})
+      const products=snapShot.docs.map((doc)=> {return {id: doc.id, ...doc.data()}}).filter(doc=> regEx.test(doc.name))
       setAllProducts(products)
       setShowSpinner(false)
       if(value>0){
@@ -71,7 +75,7 @@ function App() {
       
     });
     
-  },[queryObject, categoryArr])
+  },[queryObject, categoryArr, searchText])
 
 
 
@@ -79,7 +83,7 @@ function App() {
    
     <>
       <ToastContainer />
-      <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr, showSpinner }}>
+      <productContext.Provider value={{allProducts, setqueryObject, categoryArr, setcategoryArr, showSpinner, setsearchText }}>
         <RouterProvider router={router}/>
       </productContext.Provider>
       

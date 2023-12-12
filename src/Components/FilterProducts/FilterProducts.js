@@ -13,7 +13,7 @@ export default function FilterProduct(){
     const accessoriesRef=useRef();
     const menRef=useRef();
     const womenRef=useRef();
-    const {setqueryObject, categoryArr, setcategoryArr}=useContext(productContext);
+    const {setqueryObject, categoryArr, setcategoryArr, setsearchText}=useContext(productContext);
     
     function handleChangePrice(e){
         setPrice(parseInt(e.target.value))
@@ -46,6 +46,10 @@ export default function FilterProduct(){
         toast('Reset Done')
     }
 
+    function handleNameChange(e){
+        setsearchText(e.target.value)
+    }
+
     useEffect(()=>{
         //console.log('HandleChangePrice:', price);
         setqueryObject({field: 'price', operator: '<=', value: price})
@@ -59,7 +63,7 @@ export default function FilterProduct(){
         <div className={styles.searchFilterContainer}>
             <h3>Search and Filter</h3>
 
-            <input type='text' placeholder='Search Product By Name' className={styles.searchBox}/>
+            <input type='text' placeholder='Search Product By Name' className={styles.searchBox} onChange={(e)=>handleNameChange(e)}/>
             
             <div className={styles.InputDiv}>
                 <h4>Select Price Range</h4>
