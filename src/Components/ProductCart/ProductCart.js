@@ -88,7 +88,7 @@ export default function ProductCart(){
             }
         });
     }, 
-    [])
+    [navigate, userId])
 
     return (
         <>

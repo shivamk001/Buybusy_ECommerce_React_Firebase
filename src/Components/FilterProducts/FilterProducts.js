@@ -53,7 +53,7 @@ export default function FilterProduct(){
     useEffect(()=>{
         //console.log('HandleChangePrice:', price);
         setqueryObject({field: 'price', operator: '<=', value: price})
-    }, [price])
+    }, [price, setqueryObject])
 
     useEffect(()=>{
         document.getElementById("priceRangeInput").value=10000

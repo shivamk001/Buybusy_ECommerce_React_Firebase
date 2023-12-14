@@ -50,7 +50,7 @@ export default function Orders(){
             }
         });
     }, 
-    [])
+    [navigate, userId])
 
     return (
         <>
